@@ -7,9 +7,9 @@ var burger = require("../models/burger.js");
 
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  cat.all(function(data) {
+  burger.selectAll(function(data) {
     var hbsObject = {
-      cats: data
+      burgers: data
     };
     console.log(hbsObject);
     res.render("index", hbsObject);
@@ -17,13 +17,15 @@ router.get("/", function(req, res) {
 });
 
 router.post("/api/burger", function(req, res) {
-  burger.create([
-    "name", "devour"
+  console.log("new taco");
+  burger.insertOne([
+    "burger_name", "devoured"
   ], [
-    req.body.name, req.body.devour
+    req.body.burger_name, req.body.devoured
   ], function(result) {
     // Send back the ID of the new quote
-    res.json({ id: result.insertId });
+    // res.json({ id: result.insertId });
+    res.redirect("/");
   });
 });
 
@@ -32,8 +34,8 @@ router.put("/api/burger/:id", function(req, res) {
 
   console.log("condition", condition);
 
-  burger.update({
-    devour: req.body.devour
+  burger.updateOne({
+    devoured: req.body.devoured
   }, condition, function(result) {
     if (result.changedRows == 0) {
       // If no rows were changed, then the ID must not exist, so 404

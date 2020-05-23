@@ -1,7 +1,21 @@
 var connection = require("../config/connection.js");
 
 
+function objToSql(colVals){
+   var array = [];
+   for (var key in colVals) {
+       array.push(key + "=" + colVals[key] );
+   } 
+   return array.toString();
+}
 
+function printQuestionMarks(num) {
+    var numQuestionMarks = [];
+    for (i=0; i < num; i++){
+        numQuestionMarks.push("?");
+    }
+    return numQuestionMarks.toString();
+}
 
 var orm = {
     selectAll: function (tableInput, cb) {
@@ -20,7 +34,7 @@ var orm = {
         queryString += cols.toString();
         queryString += ") ";
         queryString += "VALUES (";
-        // queryString += printQuestionMarks(vals.length);
+        queryString += printQuestionMarks(vals.length);
         queryString += ") ";
 
         console.log(queryString);
@@ -36,7 +50,7 @@ var orm = {
         var queryString = "UPDATE " + table;
 
         queryString += " SET ";
-        // queryString += objToSql(objColVals);
+        queryString += objToSql(objColVals);
         queryString += " WHERE ";
         queryString += condition;
 

@@ -1,0 +1,7 @@
+<li>{{this.burger_name}}</li>
+<li>{{this.id}}</li>
+<li>{{this.devoured}}</li>
+{{#unless this.devoured}}
+<button id="devourButton" data-burgerid = "{{this.id}}">
+  Devour!
+</button>{{/unless}}
